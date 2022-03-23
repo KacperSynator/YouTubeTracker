@@ -25,9 +25,15 @@ namespace YouTubeTracker
             InitializeComponent();
         }
 
-        private void submitButton_Click(object sender, RoutedEventArgs e)
+        private void playButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show($"aaaaahh {firstNameText.Text}");
+
+
+            string html = "<html><head>";
+            html += "<meta content='IE=Edge' http-equiv='X-UA-Compatible'/>";
+            html += "<iframe id='video' src= 'https://www.youtube.com/embed/{0}' width='640' height='360' frameborder='0' allow = \"autoplay; encrypted-media\" allowFullScreen></iframe>";
+            html += "</head></html>";
+            this.videoWeb.NavigateToString(string.Format(html, videoPhrase.Text));
         }
     }
 }

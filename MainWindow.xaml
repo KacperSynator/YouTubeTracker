@@ -10,7 +10,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
             <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
@@ -27,9 +26,10 @@
 
         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="25" Grid.ColumnSpan="2"
             Margin="0,0,0,10" Text="Hello World" />
-        <TextBlock Grid.Column="1" Grid.Row="2" FontWeight="Bold" Text="First Name" />
-        <TextBox x:Name="firstNameText"  Grid.Column="2" Grid.Row="2" Width="100" Margin="10,0,0,0"/>
-        <Button x:Name="submitButton" Content="Click me" Grid.Column="1" Grid.Row="3"
-                Margin="10" Click="submitButton_Click"/>
+        <TextBlock Grid.Column="1" Grid.Row="2" FontWeight="Bold" Text="Enter phrase" />
+        <TextBox x:Name="videoPhrase"  Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Margin="10,0,0,0"/>
+        <Button x:Name="playButton" Content="Play" Grid.Column="1" Grid.Row="3"
+                Margin="10" Click="playButton_Click"/>
+        <WebBrowser x:Name="videoWeb" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>
