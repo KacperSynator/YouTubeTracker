@@ -29,6 +29,6 @@
         <Button x:Name="playButton" Content=" Play " Grid.Column="3" Grid.Row="1"
                 Margin="5" Click="PlayButton_Click"/>
         <TextBlock x:Name="textList" Grid.Column="4" Grid.Row="2" Text="" Margin="10"/>
-        <WebBrowser x:Name="videoWeb"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3"/>
+        <WebBrowser x:Name="videoWeb" Grid.Row="2" Grid.ColumnSpan="4" Margin="12,0,8,0"/>
     </Grid>
 </Window>

@@ -43,13 +43,14 @@ namespace YouTubeTracker
         }
         private List<List<(String, String)>> InternalSearch(string keyword, uint max_results)
         {
+            var ApiKey = System.IO.File.ReadAllText(@"..\..\API_key.txt");
+
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
-                ApiKey = "",
+                ApiKey = ApiKey,
                 ApplicationName = "YoutubeTracker"
             });
 
-   
             var searchListRequest = youtubeService.Search.List("snippet");
             searchListRequest.Q = keyword;
             searchListRequest.MaxResults = max_results;

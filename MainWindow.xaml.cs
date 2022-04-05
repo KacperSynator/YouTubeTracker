@@ -37,13 +37,12 @@ namespace YouTubeTracker
                                           );
 
             var id = search_result[0][0].Item2;
+            var video_result = new YoutubeVideo().VideoList(id);
+            //textList.Text += String.Format("Video info:\n{0}\n\n", string.Join("\n", video_result[0]));
+
             string html = "<html><head>" +
-                "<meta content='IE=Edge' http-equiv='X-UA-Compatible'/>" +
-                "<iframe id='video' src= 'https://www.youtube.com/embed/{0}'" +
-                "  style=\"overflow: hidden; overflow - x:hidden; overflow - y:hidden;" +
-                " height: 100 %; width: 100 %; position: absolute; top: 0px; left: 0px;" +
-                " right: 0px; bottom: 0px\" width='100%' height='100%' frameborder='0' " +
-                "allow = \"autoplay; encrypted-media\" allowFullScreen></iframe>" +
+                "<meta content='chrome=1,IE=Edge' http-equiv='X-UA-Compatible'/>" +
+                video_result[0][2].Insert(video_result[0][2].IndexOf("//www"), "https:") +
                 "<body style=\"background-color:black;\"></body>" +
                 "</head></html>";
             this.videoWeb.NavigateToString(string.Format(html, id));
