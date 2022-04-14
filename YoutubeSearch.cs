@@ -21,13 +21,27 @@ using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 
 namespace YouTubeTracker
-{
+{   
+    public class SearchResult
+    {
+        public List<VideoData> videos;
+        public List<VideoData> channels;
+        public List<VideoData> playlists;
+
+        public SearchResult()
+        {
+            videos = new List<VideoData>();
+            channels = new List<VideoData>();
+            playlists = new List<VideoData>();
+        }
+
+    }
     
     public class YoutubeSearch
     {
-        public List<List<(String, String)>> Search(string keyword, uint max_results = 5)
+        public SearchResult Search(string keyword, uint max_results = 5)
         {
-            List<List<(String, String)>> result = null;
+            var result = new SearchResult();
             try
             {
                 result = InternalSearch(keyword, max_results);
@@ -41,7 +55,7 @@ namespace YouTubeTracker
             }
             return result;
         }
-        private List<List<(String, String)>> InternalSearch(string keyword, uint max_results)
+        private SearchResult InternalSearch(string keyword, uint max_results)
         {
             var ApiKey = System.IO.File.ReadAllText(@"..\..\API_key.txt");
 
@@ -58,9 +72,7 @@ namespace YouTubeTracker
             // Call the search.list method to retrieve results matching the specified query term.
             var searchListResponse = searchListRequest.Execute();
 
-            List<(string, string)> videos = new List<(string, string)>();
-            List<(string, string)> channels = new List<(string, string)>();
-            List<(string, string)> playlists = new List<(string, string)>();
+            SearchResult result = new SearchResult();
 
             // Add each result to the appropriate list, and then display the lists of
             // matching videos, channels, and playlists.
@@ -69,15 +81,15 @@ namespace YouTubeTracker
                 switch (searchResult.Id.Kind)
                 {
                     case "youtube#video":
-                        videos.Add((searchResult.Snippet.Title, searchResult.Id.VideoId));
+                        result.videos.Add(new VideoData(searchResult.Id.VideoId, searchResult.Snippet.Title));
                         break;
 
                     case "youtube#channel":
-                        channels.Add((searchResult.Snippet.Title, searchResult.Id.ChannelId));
+                        result.channels.Add(new VideoData(searchResult.Id.ChannelId, searchResult.Snippet.Title));
                         break;
 
                     case "youtube#playlist":
-                        playlists.Add((searchResult.Snippet.Title, searchResult.Id.PlaylistId));
+                        result.playlists.Add(new VideoData(searchResult.Id.PlaylistId, searchResult.Snippet.Title));
                         break;
                 }
             }
@@ -86,7 +98,7 @@ namespace YouTubeTracker
             MessageBox.Show(String.Format("Channels:\n{0}\n", string.Join("\n", channels)));
             MessageBox.Show(String.Format("Playlists:\n{0}\n", string.Join("\n", playlists))); */
 
-            return new List<List<(String, String)>> { videos, channels, playlists };
+            return result;
         }
     }
 }

@@ -22,12 +22,44 @@ using Google.Apis.YouTube.v3.Data;
 
 namespace YouTubeTracker
 {
+    public struct VideoData
+    {
+        public string id;
+        public string title;
+        public string duration;
+        public string embed_html;
+
+        public VideoData(string _id, string _title)
+        {
+            id = _id;
+            title = _title;
+            duration = "";
+            embed_html = "";
+        }
+        public VideoData(string _id, string _title, string _duration, string _embed_html )
+        {
+            id = _id;
+            title = _title;
+            duration = _duration;
+            embed_html = _embed_html;
+        }
+    }
+
+    public class VideoResult
+    {
+        public List<VideoData> videos_data;
+
+        public VideoResult()
+        {
+            videos_data = new List<VideoData>();
+        }
+    }
 
     public class YoutubeVideo
     {
-        public List<List<String>> VideoList(string video_id)
+        public VideoResult VideoList(string video_id)
         {
-            List<List<String>> result = null;
+            var result = new VideoResult();
             try
             {
                 result = InternalVideoList(video_id);
@@ -41,7 +73,7 @@ namespace YouTubeTracker
             }
             return result;
         }
-        private List<List<String>> InternalVideoList(string video_id)
+        private VideoResult InternalVideoList(string video_id)
         {
             var ApiKey = System.IO.File.ReadAllText(@"..\..\API_key.txt");
 
@@ -51,22 +83,24 @@ namespace YouTubeTracker
                 ApplicationName = "YoutubeTracker"
             });
 
-            var videoListRequest = youtubeService.Videos.List("player,contentDetails,statistics");
+            var videoListRequest = youtubeService.Videos.List("player,contentDetails,statistics,snippet");
             videoListRequest.Id = video_id;
 
             // Call the video.list method to retrieve results matching the specified query term.
             var videoListResponse = videoListRequest.Execute();
 
-            List<List<string>> result = new List<List<string>>();
+            var result = new VideoResult();
 
             // Add info result to the result list
             foreach (var videoResult in videoListResponse.Items)
             {
-                var video_info = new List<string>();
-                video_info.Add(video_id);
-                video_info.Add(videoResult.ContentDetails.Duration);
-                video_info.Add(videoResult.Player.EmbedHtml);
-                result.Add(video_info);
+                var video_info = new VideoData(
+                    video_id,
+                    videoResult.Snippet.Title,
+                    videoResult.ContentDetails.Duration,
+                    videoResult.Player.EmbedHtml
+                    );
+                result.videos_data.Add(video_info);
             }
 
             return result;

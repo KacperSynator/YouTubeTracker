@@ -31,18 +31,18 @@ namespace YouTubeTracker
             var search_result = new YoutubeSearch().Search(videoPhrase.Text, 10);
 
             textList.Text = String.Format("Videos:\n{0}\n\nChannels:\n{1}\n\nPlaylists:\n{2}\n\n",
-                                            string.Join("\n", search_result[0].Select(x => x.Item1)),
-                                            string.Join("\n", search_result[1].Select(x => x.Item1)),
-                                            string.Join("\n", search_result[2].Select(x => x.Item1))
+                                            string.Join("\n", search_result.videos.Select(x => x.title)),
+                                            string.Join("\n", search_result.channels.Select(x => x.title)),
+                                            string.Join("\n", search_result.playlists.Select(x => x.title))
                                           );
 
-            var id = search_result[0][0].Item2;
+            var id = search_result.videos[0].id;
             var video_result = new YoutubeVideo().VideoList(id);
             //textList.Text += String.Format("Video info:\n{0}\n\n", string.Join("\n", video_result[0]));
 
             string html = "<html><head>" +
                 "<meta content='chrome=1,IE=Edge' http-equiv='X-UA-Compatible'/>" +
-                video_result[0][2].Insert(video_result[0][2].IndexOf("//www"), "https:") +
+                video_result.videos_data[0].embed_html.Insert(video_result.videos_data[0].embed_html.IndexOf("//www"), "https:") +
                 "<body style=\"background-color:black;\"></body>" +
                 "</head></html>";
             this.videoWeb.NavigateToString(string.Format(html, id));
