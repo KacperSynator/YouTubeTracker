@@ -57,7 +57,17 @@ namespace YouTubeTracker
         }
         private SearchResult InternalSearch(string keyword, uint max_results)
         {
-            var ApiKey = System.IO.File.ReadAllText(@"..\..\API_key.txt");
+            string ApiKey = null;
+            try
+            {
+                ApiKey = System.IO.File.ReadAllText(@"..\..\API_key.txt");
+            }
+            catch(System.IO.IOException ex)
+            {
+                MessageBox.Show("Error: "+ ex.Message +" Add API_key.txt with google api key in project directory.");
+                return null;
+            }
+           
 
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
@@ -70,7 +80,16 @@ namespace YouTubeTracker
             searchListRequest.MaxResults = max_results;
 
             // Call the search.list method to retrieve results matching the specified query term.
-            var searchListResponse = searchListRequest.Execute();
+            SearchListResponse searchListResponse = null;
+            try
+            {
+                searchListResponse = searchListRequest.Execute();
+            }
+            catch(Google.GoogleApiException ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+                return null;
+            }
 
             SearchResult result = new SearchResult();
 

@@ -30,6 +30,8 @@ namespace YouTubeTracker
         {
             var search_result = new YoutubeSearch().Search(videoPhrase.Text, 10);
 
+            if (search_result == null) return;
+
             textList.Text = String.Format("Videos:\n{0}\n\nChannels:\n{1}\n\nPlaylists:\n{2}\n\n",
                                             string.Join("\n", search_result.videos.Select(x => x.title)),
                                             string.Join("\n", search_result.channels.Select(x => x.title)),
@@ -37,7 +39,8 @@ namespace YouTubeTracker
                                           );
 
             var id = search_result.videos[0].id;
-            var video_result = new YoutubeVideo().VideoList(id);
+            var video_result = new YoutubeVideo().VideoList(new List<string> {id});
+            if (video_result == null) return;
             //textList.Text += String.Format("Video info:\n{0}\n\n", string.Join("\n", video_result[0]));
 
             string html = "<html><head>" +

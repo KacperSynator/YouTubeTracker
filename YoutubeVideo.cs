@@ -57,12 +57,12 @@ namespace YouTubeTracker
 
     public class YoutubeVideo
     {
-        public VideoResult VideoList(string video_id)
+        public VideoResult VideoList(List<string> videos_id)
         {
             var result = new VideoResult();
             try
             {
-                result = InternalVideoList(video_id);
+                result = InternalVideoList(videos_id);
             }
             catch (AggregateException ex)
             {
@@ -73,9 +73,18 @@ namespace YouTubeTracker
             }
             return result;
         }
-        private VideoResult InternalVideoList(string video_id)
+        private VideoResult InternalVideoList(List<string> videos_id)
         {
-            var ApiKey = System.IO.File.ReadAllText(@"..\..\API_key.txt");
+            string ApiKey = null;
+            try
+            {
+                ApiKey = System.IO.File.ReadAllText(@"..\..\API_key.txt");
+            }
+            catch (System.IO.IOException ex)
+            {
+                MessageBox.Show("Error: " + ex.Message + " Add API_key.txt with google api key in project directory.");
+                return null;
+            }
 
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
@@ -83,11 +92,21 @@ namespace YouTubeTracker
                 ApplicationName = "YoutubeTracker"
             });
 
-            var videoListRequest = youtubeService.Videos.List("player,contentDetails,statistics,snippet");
-            videoListRequest.Id = video_id;
+            var videoListRequest = youtubeService.Videos.List("player,contentDetails,statistics,snippet,id");
+            videoListRequest.Id = String.Join(",", videos_id);
 
             // Call the video.list method to retrieve results matching the specified query term.
-            var videoListResponse = videoListRequest.Execute();
+            VideoListResponse videoListResponse = null;
+            try
+            {
+                videoListResponse = videoListRequest.Execute();
+            }
+            catch (Google.GoogleApiException ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+                return null;
+            }
+            
 
             var result = new VideoResult();
 
@@ -95,7 +114,7 @@ namespace YouTubeTracker
             foreach (var videoResult in videoListResponse.Items)
             {
                 var video_info = new VideoData(
-                    video_id,
+                    videoResult.Id,
                     videoResult.Snippet.Title,
                     videoResult.ContentDetails.Duration,
                     videoResult.Player.EmbedHtml
