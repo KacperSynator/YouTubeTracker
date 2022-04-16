@@ -78,6 +78,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ListBoxItem.cs" />
+    <Compile Include="VideoData.cs" />
+    <Compile Include="YoutubeTracker.cs" />
     <Compile Include="YoutubeVideo.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
