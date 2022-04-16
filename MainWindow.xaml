@@ -14,6 +14,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
 
@@ -26,9 +27,21 @@
 
         <TextBlock Grid.Column="1" Grid.Row="1" FontWeight="Bold" Text="Enter phrase" Margin="5"/>
         <TextBox x:Name="videoPhrase"  Grid.Column="2" Grid.Row="1"  Margin="5"/>
-        <Button x:Name="playButton" Content=" Play " Grid.Column="3" Grid.Row="1"
+        <Button x:Name="searchButton" Content=" Search " Grid.Column="3" Grid.Row="1"
+                Margin="5" Click="SearchButton_Click"/>
+        <Button x:Name="playButton" Content=" Play " Grid.Column="4" Grid.Row="1"
                 Margin="5" Click="PlayButton_Click"/>
-        <TextBlock x:Name="textList" Grid.Column="4" Grid.Row="2" Text="" Margin="10"/>
+        <ListBox x:Name="videoListBox" Grid.Column="4" Grid.Row="2" Margin="10"
+                 Background="Black" Foreground="WhiteSmoke" Grid.ColumnSpan="2" >
+            <ListBox.ItemTemplate  >
+                <DataTemplate DataType="{x:Type local:ListBoxItem}" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="3" Width="120" Height="90"  Source="{Binding image}"/>
+                        <TextBlock Margin="3"  Text="{Binding text}" Tag="{Binding text}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <WebBrowser x:Name="videoWeb" Grid.Row="2" Grid.ColumnSpan="4" Margin="12,0,8,0"/>
     </Grid>
 </Window>

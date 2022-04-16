@@ -22,107 +22,80 @@ using Google.Apis.YouTube.v3.Data;
 
 namespace YouTubeTracker
 {
-    public struct VideoData
+    public partial class YoutubeTracker
     {
-        public string id;
-        public string title;
-        public string duration;
-        public string embed_html;
-
-        public VideoData(string _id, string _title)
+        public class VideoResult
         {
-            id = _id;
-            title = _title;
-            duration = "";
-            embed_html = "";
-        }
-        public VideoData(string _id, string _title, string _duration, string _embed_html )
-        {
-            id = _id;
-            title = _title;
-            duration = _duration;
-            embed_html = _embed_html;
-        }
-    }
+            public List<VideoData> videos_data;
 
-    public class VideoResult
-    {
-        public List<VideoData> videos_data;
-
-        public VideoResult()
-        {
-            videos_data = new List<VideoData>();
-        }
-    }
-
-    public class YoutubeVideo
-    {
-        public VideoResult VideoList(List<string> videos_id)
-        {
-            var result = new VideoResult();
-            try
+            public VideoResult()
             {
-                result = InternalVideoList(videos_id);
+                videos_data = new List<VideoData>();
             }
-            catch (AggregateException ex)
+        }
+
+        public class YoutubeVideo
+        {
+            public VideoResult VideoList(List<string> videos_id)
             {
-                foreach (var e in ex.InnerExceptions)
+                var result = new VideoResult();
+                try
                 {
-                    MessageBox.Show("Error: " + e.Message);
+                    result = InternalVideoList(videos_id);
                 }
+                catch (AggregateException ex)
+                {
+                    foreach (var e in ex.InnerExceptions)
+                    {
+                        MessageBox.Show("Error: " + e.Message);
+                    }
+                }
+                return result;
             }
-            return result;
-        }
-        private VideoResult InternalVideoList(List<string> videos_id)
-        {
-            string ApiKey = null;
-            try
+            private VideoResult InternalVideoList(List<string> videos_id)
             {
-                ApiKey = System.IO.File.ReadAllText(@"..\..\API_key.txt");
+                string ApiKey = YoutubeTracker.GetApiKey();
+                if (ApiKey == null) return null;
+
+                var youtubeService = new YouTubeService(new BaseClientService.Initializer()
+                {
+                    ApiKey = ApiKey,
+                    ApplicationName = "YoutubeTracker"
+                });
+
+                var videoListRequest = youtubeService.Videos.List("player,contentDetails,statistics,snippet,id");
+                videoListRequest.Id = String.Join(",", videos_id);
+
+                // Call the video.list method to retrieve results matching the specified query term.
+                VideoListResponse videoListResponse = null;
+                try
+                {
+                    videoListResponse = videoListRequest.Execute();
+                }
+                catch (Google.GoogleApiException ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                    return null;
+                }
+
+
+                var result = new VideoResult();
+
+                // Add info result to the result list
+                foreach (var videoResult in videoListResponse.Items)
+                {
+                    var video_info = new VideoData(
+                        videoResult.Id,
+                        videoResult.Snippet.Title,
+                        videoResult.ContentDetails.Duration,
+                        videoResult.Player.EmbedHtml,
+                        videoResult.Snippet.Thumbnails.Default__.Url
+                        );
+                    result.videos_data.Add(video_info);
+                }
+
+                return result;
             }
-            catch (System.IO.IOException ex)
-            {
-                MessageBox.Show("Error: " + ex.Message + " Add API_key.txt with google api key in project directory.");
-                return null;
-            }
-
-            var youtubeService = new YouTubeService(new BaseClientService.Initializer()
-            {
-                ApiKey = ApiKey,
-                ApplicationName = "YoutubeTracker"
-            });
-
-            var videoListRequest = youtubeService.Videos.List("player,contentDetails,statistics,snippet,id");
-            videoListRequest.Id = String.Join(",", videos_id);
-
-            // Call the video.list method to retrieve results matching the specified query term.
-            VideoListResponse videoListResponse = null;
-            try
-            {
-                videoListResponse = videoListRequest.Execute();
-            }
-            catch (Google.GoogleApiException ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-                return null;
-            }
-            
-
-            var result = new VideoResult();
-
-            // Add info result to the result list
-            foreach (var videoResult in videoListResponse.Items)
-            {
-                var video_info = new VideoData(
-                    videoResult.Id,
-                    videoResult.Snippet.Title,
-                    videoResult.ContentDetails.Duration,
-                    videoResult.Player.EmbedHtml
-                    );
-                result.videos_data.Add(video_info);
-            }
-
-            return result;
         }
     }
 }
