@@ -1,23 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Entity;
-using System.Collections.ObjectModel;
+﻿using System.Data.Entity;
 
 
 namespace YouTubeTracker.DataBase
 {
+    /// <summary>
+    /// Class <c>YTrackerDBContext</c> models a context of database.
+    /// </summary>
     public class YTrackerDBContext : DbContext
     {
+        /// <summary>
+        /// Parameterless constructor
+        /// </summary>
         public YTrackerDBContext()
             : base("name=YTrackerDBContext")
         {
-            this.Configuration.LazyLoadingEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
         }
 
+        /// <summary>
+        /// Videos entity
+        /// </summary>
         public DbSet<DBVideo> DBVideos { get; set; }
+        /// <summary>
+        /// Playlists entity
+        /// </summary>
         public DbSet<DBPlaylist> DBPlaylists { get; set; }
 
     }

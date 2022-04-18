@@ -64,9 +64,9 @@
         
         <Button x:Name="playButton" Content=" Play " Grid.Column="4" Grid.Row="4"
                 Margin="5" Click="PlayButton_Click"/>
-        <Button x:Name="addButton" Content=" Add to playlist " Grid.Column="5" Grid.Row="4"
+        <Button x:Name="addToPlaylistButton" Content=" Add to playlist " Grid.Column="5" Grid.Row="4"
                 Margin="5" Click="AddToPlaylistButton_Click"/>
-        <Button x:Name="removeButton" Content=" Remove from playlist " Grid.Column="6" Grid.Row="4"
+        <Button x:Name="removeFromPlaylistButton" Content=" Remove from playlist " Grid.Column="6" Grid.Row="4"
                 Margin="5" Click="RemoveFromPlaylistButton_Click"/>
         
 
