@@ -374,26 +374,39 @@ namespace YouTubeTracker
         /// <summary>
         /// Change logic for ComboBox: <c>playlistCB</c>.
         /// Loads and shows (in playlist view) playlist videos when new playist is selected.
+        /// Prints playlist videos count and duration in minutes.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void PlaylistComboBox_Changed(object sender, SelectionChangedEventArgs e)
         {
-            // check if in playlist view
-            if (!playlistRadioButton.IsChecked.Value) return;
             // load selected playlist videos
             var context = App.Context;
             var playlist_name = playlistsCB.SelectedItem as string;
             var playlist_id = context.DBPlaylists
-                                     .Where(x => x.Name == playlist_name)
-                                     .First()
-                                     .ID;
-            YoutubeTracker.LoadVideosFromDB(context.DBVideos
-                                                   .Where(x => x.DBPlaylistID == playlist_id)
-                                                   .ToList()
-                                                   );
-            // update video ListBox
-            UpdateVideoListBox(YoutubeTracker.GetLoadedVideosFromDB());
+                .Where(x => x.Name == playlist_name)
+                .First()
+                .ID;
+            // check if in playlist view
+            if (playlistRadioButton.IsChecked.Value)
+            {
+                YoutubeTracker.LoadVideosFromDB(
+                    context.DBVideos
+                    .Where(x => x.DBPlaylistID == playlist_id)
+                    .ToList()
+                );
+                // update video ListBox
+                UpdateVideoListBox(YoutubeTracker.GetLoadedVideosFromDB());
+            }
+            // print playlist duration and videos count
+            var duration = context.DBVideos
+                .Where(x => x.DBPlaylistID == playlist_id)
+                .Sum(x => x.Duration);
+            var count = context.DBVideos.
+                Where(x => x.DBPlaylistID == playlist_id)
+                .Count();
+            playlistDuration.Text = "Videos count: " + count.ToString() +
+            "         Playlist duration: " + (duration / 60).ToString() + " min.";              
         }
     }
 }

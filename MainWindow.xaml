@@ -25,6 +25,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
@@ -56,22 +57,25 @@
                      GroupName="ViewSelection" Foreground="WhiteSmoke">Playlist</RadioButton>
         </StackPanel>
 
-        <ComboBox x:Name="playlistsCB" Grid.Column="4"  Grid.Row="3" Margin="5" SelectionChanged="PlaylistComboBox_Changed" />
-        <Button x:Name="addPlaylistButton" Content=" Add playlist " Grid.Column="5" Grid.Row="3"
+        <TextBlock x:Name="playlistDuration" Grid.Column="4" Grid.Row="3" Margin="5" Text="Playlist duration: " 
+                   Grid.ColumnSpan="3"/>
+
+        <ComboBox x:Name="playlistsCB" Grid.Column="4"  Grid.Row="4" Margin="5" SelectionChanged="PlaylistComboBox_Changed" />
+        <Button x:Name="addPlaylistButton" Content=" Add playlist " Grid.Column="5" Grid.Row="4"
                 Margin="5" Click="AddPlaylistButton_Click"/>
-        <Button x:Name="removePlaylistButton" Content=" Remove playlist " Grid.Column="6" Grid.Row="3"
+        <Button x:Name="removePlaylistButton" Content=" Remove playlist " Grid.Column="6" Grid.Row="4"
                 Margin="5" Click="RemovePlaylistButton_Click"/>
         
-        <Button x:Name="playButton" Content=" Play " Grid.Column="4" Grid.Row="4"
+        <Button x:Name="playButton" Content=" Play " Grid.Column="4" Grid.Row="5"
                 Margin="5" Click="PlayButton_Click"/>
-        <Button x:Name="addToPlaylistButton" Content=" Add to playlist " Grid.Column="5" Grid.Row="4"
+        <Button x:Name="addToPlaylistButton" Content=" Add to playlist " Grid.Column="5" Grid.Row="5"
                 Margin="5" Click="AddToPlaylistButton_Click"/>
-        <Button x:Name="removeFromPlaylistButton" Content=" Remove from playlist " Grid.Column="6" Grid.Row="4"
+        <Button x:Name="removeFromPlaylistButton" Content=" Remove from playlist " Grid.Column="6" Grid.Row="5"
                 Margin="5" Click="RemoveFromPlaylistButton_Click"/>
         
 
         <WebBrowser x:Name="videoWeb" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="3"
-                    Grid.RowSpan="3" Margin="0,0,8,0"/>
+                    Grid.RowSpan="4" Margin="0,0,8,0"/>
         
     </Grid>
 </Window>
