@@ -36,7 +36,6 @@ namespace YouTubeTracker
                 channels = new List<VideoData>();
                 playlists = new List<VideoData>();
             }
-
         }
 
         private class YoutubeSearch
@@ -93,25 +92,18 @@ namespace YouTubeTracker
                     switch (searchResult.Id.Kind)
                     {
                         case "youtube#video":
-                            result.videos.Add(new VideoData(searchResult.Id.VideoId, searchResult.Snippet.Title,
-                                                                searchResult.Snippet.Thumbnails.Default__.Url));
+                            result.videos.Add(new VideoData(searchResult.Id.VideoId));
                             break;
 
                         case "youtube#channel":
-                            result.channels.Add(new VideoData(searchResult.Id.ChannelId, searchResult.Snippet.Title,
-                                                                searchResult.Snippet.Thumbnails.Default__.Url));
+                            result.channels.Add(new VideoData(searchResult.Id.ChannelId));
                             break;
 
                         case "youtube#playlist":
-                            result.playlists.Add(new VideoData(searchResult.Id.PlaylistId, searchResult.Snippet.Title,
-                                                                searchResult.Snippet.Thumbnails.Default__.Url));
+                            result.playlists.Add(new VideoData(searchResult.Id.PlaylistId));
                             break;
                     }
                 }
-
-                /* MessageBox.Show(String.Format("Videos:\n{0}\n", string.Join("\n", videos)));
-                MessageBox.Show(String.Format("Channels:\n{0}\n", string.Join("\n", channels)));
-                MessageBox.Show(String.Format("Playlists:\n{0}\n", string.Join("\n", playlists))); */
 
                 return result;
             }

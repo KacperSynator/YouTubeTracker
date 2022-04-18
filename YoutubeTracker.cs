@@ -4,33 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace YouTubeTracker
 {
     public partial class YoutubeTracker
     {
-        private static YoutubeTracker instance;
-        private static List<VideoData> LoadedVideos;
+        private static List<VideoData> LoadedVideosFromSearch;
+        private static List<VideoData> LoadedVideosFromDB;
+
         private YoutubeTracker()
         {
-            LoadedVideos = new List<VideoData>();
+            LoadedVideosFromSearch = new List<VideoData>();
+            LoadedVideosFromDB = new List<VideoData>();
         }
 
-        public static YoutubeTracker Get
+        public static List<VideoData> GetLoadedVideosFromSearch()
         {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new YoutubeTracker();
-                }
-                return instance;
-            }
+            if (LoadedVideosFromSearch == null) LoadedVideosFromSearch = new List<VideoData>();
+            return LoadedVideosFromSearch;
         }
 
-        public static List<VideoData> GetLoadedVideos()
+        public static List<VideoData> GetLoadedVideosFromDB()
         {
-            return LoadedVideos;
+            if (LoadedVideosFromDB == null) LoadedVideosFromDB = new List<VideoData>();
+            return LoadedVideosFromDB;
         }
 
         public static string GetApiKey()
@@ -59,9 +57,34 @@ namespace YouTubeTracker
             ).videos_data;
             if (videos_with_all_data == null) return false;
 
-            if (LoadedVideos == null) LoadedVideos = new List<VideoData>();
-            LoadedVideos.AddRange(videos_with_all_data);
+            if (LoadedVideosFromSearch == null) LoadedVideosFromSearch = new List<VideoData>();
+            LoadedVideosFromSearch.AddRange(videos_with_all_data);
             return true;
+        }
+
+        public static bool LoadVideosFromDB(List<DataBase.DBVideo> db_videos)
+        {
+            if (LoadedVideosFromDB == null) LoadedVideosFromDB = new List<VideoData>();
+            LoadedVideosFromDB.Clear();
+            foreach (var db_video in db_videos)
+            {
+                var video = new VideoData()
+                {
+                    title = db_video.Title,
+                    thumbnail_url = db_video.ThumbnailURL,
+                    id = db_video.YTID,
+                    embed_html = db_video.EmbedHTML,
+                    duration = ""
+                };
+                LoadedVideosFromDB.Add(video);
+            }
+            return true;
+        }
+
+        public static int YTDuration2seconds(string yt_duration)
+        {
+            TimeSpan duration = XmlConvert.ToTimeSpan(yt_duration);
+            return (int)duration.TotalSeconds;
         }
     }
 }

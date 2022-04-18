@@ -15,6 +15,7 @@
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
 
@@ -22,26 +23,55 @@
             <RowDefinition Height="20" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Column="1" Grid.Row="1" FontWeight="Bold" Text="Enter phrase" Margin="5"/>
         <TextBox x:Name="videoPhrase"  Grid.Column="2" Grid.Row="1"  Margin="5"/>
         <Button x:Name="searchButton" Content=" Search " Grid.Column="3" Grid.Row="1"
-                Margin="5" Click="SearchButton_Click"/>
-        <Button x:Name="playButton" Content=" Play " Grid.Column="4" Grid.Row="1"
-                Margin="5" Click="PlayButton_Click"/>
+                Margin="5" Click="SearchButton_Click" />
+        <TextBlock Grid.Column="4" Grid.Row="1"  Text="Max Search Results:" Margin="5"/>
+        <TextBox x:Name="maxSearchResults" Grid.Column="4" Grid.Row="1" Margin="170,5,5,5" Width="25"
+                     Text="10" PreviewTextInput="PreviewTextInput"/>
+
         <ListBox x:Name="videoListBox" Grid.Column="4" Grid.Row="2" Margin="10"
-                 Background="Black" Foreground="WhiteSmoke" Grid.ColumnSpan="2" >
+                 Background="Black" Foreground="WhiteSmoke" Grid.ColumnSpan="3" >
             <ListBox.ItemTemplate  >
                 <DataTemplate DataType="{x:Type local:ListBoxItem}" >
                     <StackPanel Orientation="Horizontal">
                         <Image Margin="3" Width="120" Height="90"  Source="{Binding image}"/>
-                        <TextBlock Margin="3"  Text="{Binding text}" Tag="{Binding text}"/>
+                        <TextBlock Margin="3"  Text="{Binding text}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <WebBrowser x:Name="videoWeb" Grid.Row="2" Grid.ColumnSpan="4" Margin="12,0,8,0"/>
+
+        <StackPanel Orientation="Horizontal"  Grid.Row="1" Grid.Column="5" Margin="5" Grid.ColumnSpan="2">
+            <TextBlock x:Name="selectionText" FontWeight="Bold" Text=" View: " Margin="40,0,0,0"/>
+            <RadioButton x:Name="searchtRadioButton" Margin="5,0,0,0" IsChecked="True" Checked="SearchRB_Checked"
+                     GroupName="ViewSelection" Foreground="WhiteSmoke">Search</RadioButton>
+            <RadioButton x:Name="playlistRadioButton" Margin="5,0,0,0" IsChecked="False" Checked="PlaylistRB_Checked"
+                     GroupName="ViewSelection" Foreground="WhiteSmoke">Playlist</RadioButton>
+        </StackPanel>
+
+        <ComboBox x:Name="playlistsCB" Grid.Column="4"  Grid.Row="3" Margin="5" SelectionChanged="PlaylistComboBox_Changed" />
+        <Button x:Name="addPlaylistButton" Content=" Add playlist " Grid.Column="5" Grid.Row="3"
+                Margin="5" Click="AddPlaylistButton_Click"/>
+        <Button x:Name="removePlaylistButton" Content=" Remove playlist " Grid.Column="6" Grid.Row="3"
+                Margin="5" Click="RemovePlaylistButton_Click"/>
+        
+        <Button x:Name="playButton" Content=" Play " Grid.Column="4" Grid.Row="4"
+                Margin="5" Click="PlayButton_Click"/>
+        <Button x:Name="addButton" Content=" Add to playlist " Grid.Column="5" Grid.Row="4"
+                Margin="5" Click="AddToPlaylistButton_Click"/>
+        <Button x:Name="removeButton" Content=" Remove from playlist " Grid.Column="6" Grid.Row="4"
+                Margin="5" Click="RemoveFromPlaylistButton_Click"/>
+        
+
+        <WebBrowser x:Name="videoWeb" Grid.Row="2" Grid.Column="1"  Grid.ColumnSpan="3"
+                    Grid.RowSpan="3" Margin="0,0,8,0"/>
+        
     </Grid>
 </Window>

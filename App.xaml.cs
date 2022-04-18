@@ -13,5 +13,18 @@ namespace YouTubeTracker
     /// </summary>
     public partial class App : Application
     {
+        private static DataBase.YTrackerDBContext DBContext { get; set; }
+
+        public static DataBase.YTrackerDBContext Context
+        {
+            get
+            {
+                if (DBContext == null)
+                {
+                    DBContext = new DataBase.YTrackerDBContext();
+                }
+                return DBContext;
+            }
+        }
     }
 }

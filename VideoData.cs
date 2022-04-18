@@ -14,11 +14,11 @@ namespace YouTubeTracker
         public string duration { get; set; }
         public string embed_html { get; set; }
 
-        public VideoData(string _id, string _title, string _thumbnail_url)
+        public VideoData(string _id)
         {
             id = _id;
-            title = _title;
-            thumbnail_url = _thumbnail_url;
+            title = "";
+            thumbnail_url = "";
             duration = "";
             embed_html = "";
         }
