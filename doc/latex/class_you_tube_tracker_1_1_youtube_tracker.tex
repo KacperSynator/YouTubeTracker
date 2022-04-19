@@ -1,0 +1,138 @@
+\hypertarget{class_you_tube_tracker_1_1_youtube_tracker}{}\section{You\+Tube\+Tracker.\+Youtube\+Tracker Class Reference}
+\label{class_you_tube_tracker_1_1_youtube_tracker}\index{You\+Tube\+Tracker.\+Youtube\+Tracker@{You\+Tube\+Tracker.\+Youtube\+Tracker}}
+
+
+Class {\ttfamily \mbox{\hyperlink{class_you_tube_tracker_1_1_youtube_tracker}{Youtube\+Tracker}}} stores currently used videos and is a link beetween window app, Youtube data A\+PI and database.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_you_tube_tracker_1_1_youtube_tracker_1_1_search_result}{Search\+Result}}
+\begin{DoxyCompactList}\small\item\em Class {\ttfamily \mbox{\hyperlink{class_you_tube_tracker_1_1_youtube_tracker_1_1_search_result}{Search\+Result}}} models result of youtube Search request. Result videos, channels, playlists are stored in adequate lists. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_you_tube_tracker_1_1_youtube_tracker_1_1_video_result}{Video\+Result}}
+\begin{DoxyCompactList}\small\item\em Class {\ttfamily \mbox{\hyperlink{class_you_tube_tracker_1_1_youtube_tracker_1_1_video_result}{Video\+Result}}} models result of youtube Video\+List request. Result videos are stored in list {\ttfamily videos\+\_\+data}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static List$<$ \mbox{\hyperlink{struct_you_tube_tracker_1_1_video_data}{Video\+Data}} $>$ \mbox{\hyperlink{class_you_tube_tracker_1_1_youtube_tracker_a051294db3492eddceab4772c431cc5bc}{Get\+Loaded\+Videos\+From\+Search}} ()
+\begin{DoxyCompactList}\small\item\em Static method which returns search result videos. \end{DoxyCompactList}\item 
+static List$<$ \mbox{\hyperlink{struct_you_tube_tracker_1_1_video_data}{Video\+Data}} $>$ \mbox{\hyperlink{class_you_tube_tracker_1_1_youtube_tracker_a6a194051a9ab5add4c090da7392a8c9d}{Get\+Loaded\+Videos\+From\+DB}} ()
+\begin{DoxyCompactList}\small\item\em Static method which returns selected playlist videos. \end{DoxyCompactList}\item 
+static string \mbox{\hyperlink{class_you_tube_tracker_1_1_youtube_tracker_a8e33afb1adb2d2a4a0b1d539f2631827}{Get\+Api\+Key}} ()
+\begin{DoxyCompactList}\small\item\em Static method for accesing Google api key. Reads api key from file {\ttfamily A\+P\+I\+\_\+key.\+txt} in main project directory. When fails message box is shown. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_you_tube_tracker_1_1_youtube_tracker_a24b98848290566830b3f08b09168f4d9}{Search}} (string keyword, uint max\+\_\+results=10)
+\begin{DoxyCompactList}\small\item\em Static method for executing youtube search request. Result can be accesed by {\ttfamily Get\+Loaded\+Videos\+From\+Search} method. Calls internal classes {\ttfamily Youtube\+Search}, {\ttfamily Youtube\+Video}. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_you_tube_tracker_1_1_youtube_tracker_af040757c1f7db9fd8f81cf06e4ade32f}{Load\+Videos\+From\+DB}} (List$<$ Data\+Base.\+D\+B\+Video $>$ db\+\_\+videos)
+\begin{DoxyCompactList}\small\item\em Static method for loading database videos to internal list. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{class_you_tube_tracker_1_1_youtube_tracker_a431b19f99b43d033603fb67b66dde65a}{Y\+T\+Duration2seconds}} (string yt\+\_\+duration)
+\begin{DoxyCompactList}\small\item\em Static method for converting video duration in I\+SO 8601 format to seconds(int) format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class {\ttfamily \mbox{\hyperlink{class_you_tube_tracker_1_1_youtube_tracker}{Youtube\+Tracker}}} stores currently used videos and is a link beetween window app, Youtube data A\+PI and database. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_you_tube_tracker_1_1_youtube_tracker_a8e33afb1adb2d2a4a0b1d539f2631827}\label{class_you_tube_tracker_1_1_youtube_tracker_a8e33afb1adb2d2a4a0b1d539f2631827}} 
+\index{You\+Tube\+Tracker\+::\+Youtube\+Tracker@{You\+Tube\+Tracker\+::\+Youtube\+Tracker}!Get\+Api\+Key@{Get\+Api\+Key}}
+\index{Get\+Api\+Key@{Get\+Api\+Key}!You\+Tube\+Tracker\+::\+Youtube\+Tracker@{You\+Tube\+Tracker\+::\+Youtube\+Tracker}}
+\subsubsection{\texorpdfstring{Get\+Api\+Key()}{GetApiKey()}}
+{\footnotesize\ttfamily static string You\+Tube\+Tracker.\+Youtube\+Tracker.\+Get\+Api\+Key (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Static method for accesing Google api key. Reads api key from file {\ttfamily A\+P\+I\+\_\+key.\+txt} in main project directory. When fails message box is shown. 
+
+\begin{DoxyReturn}{Returns}
+A\+PI key when suceed otherwise {\ttfamily null}.
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_you_tube_tracker_1_1_youtube_tracker_a6a194051a9ab5add4c090da7392a8c9d}\label{class_you_tube_tracker_1_1_youtube_tracker_a6a194051a9ab5add4c090da7392a8c9d}} 
+\index{You\+Tube\+Tracker\+::\+Youtube\+Tracker@{You\+Tube\+Tracker\+::\+Youtube\+Tracker}!Get\+Loaded\+Videos\+From\+DB@{Get\+Loaded\+Videos\+From\+DB}}
+\index{Get\+Loaded\+Videos\+From\+DB@{Get\+Loaded\+Videos\+From\+DB}!You\+Tube\+Tracker\+::\+Youtube\+Tracker@{You\+Tube\+Tracker\+::\+Youtube\+Tracker}}
+\subsubsection{\texorpdfstring{Get\+Loaded\+Videos\+From\+D\+B()}{GetLoadedVideosFromDB()}}
+{\footnotesize\ttfamily static List$<$\mbox{\hyperlink{struct_you_tube_tracker_1_1_video_data}{Video\+Data}}$>$ You\+Tube\+Tracker.\+Youtube\+Tracker.\+Get\+Loaded\+Videos\+From\+DB (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Static method which returns selected playlist videos. 
+
+\begin{DoxyReturn}{Returns}
+List of selected playlist videos.
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_you_tube_tracker_1_1_youtube_tracker_a051294db3492eddceab4772c431cc5bc}\label{class_you_tube_tracker_1_1_youtube_tracker_a051294db3492eddceab4772c431cc5bc}} 
+\index{You\+Tube\+Tracker\+::\+Youtube\+Tracker@{You\+Tube\+Tracker\+::\+Youtube\+Tracker}!Get\+Loaded\+Videos\+From\+Search@{Get\+Loaded\+Videos\+From\+Search}}
+\index{Get\+Loaded\+Videos\+From\+Search@{Get\+Loaded\+Videos\+From\+Search}!You\+Tube\+Tracker\+::\+Youtube\+Tracker@{You\+Tube\+Tracker\+::\+Youtube\+Tracker}}
+\subsubsection{\texorpdfstring{Get\+Loaded\+Videos\+From\+Search()}{GetLoadedVideosFromSearch()}}
+{\footnotesize\ttfamily static List$<$\mbox{\hyperlink{struct_you_tube_tracker_1_1_video_data}{Video\+Data}}$>$ You\+Tube\+Tracker.\+Youtube\+Tracker.\+Get\+Loaded\+Videos\+From\+Search (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Static method which returns search result videos. 
+
+\begin{DoxyReturn}{Returns}
+List of search result videos
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_you_tube_tracker_1_1_youtube_tracker_af040757c1f7db9fd8f81cf06e4ade32f}\label{class_you_tube_tracker_1_1_youtube_tracker_af040757c1f7db9fd8f81cf06e4ade32f}} 
+\index{You\+Tube\+Tracker\+::\+Youtube\+Tracker@{You\+Tube\+Tracker\+::\+Youtube\+Tracker}!Load\+Videos\+From\+DB@{Load\+Videos\+From\+DB}}
+\index{Load\+Videos\+From\+DB@{Load\+Videos\+From\+DB}!You\+Tube\+Tracker\+::\+Youtube\+Tracker@{You\+Tube\+Tracker\+::\+Youtube\+Tracker}}
+\subsubsection{\texorpdfstring{Load\+Videos\+From\+D\+B()}{LoadVideosFromDB()}}
+{\footnotesize\ttfamily static bool You\+Tube\+Tracker.\+Youtube\+Tracker.\+Load\+Videos\+From\+DB (\begin{DoxyParamCaption}\item[{List$<$ Data\+Base.\+D\+B\+Video $>$}]{db\+\_\+videos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Static method for loading database videos to internal list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em db\+\_\+videos} & List of videos from database request\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if suceed otherwise {\ttfamily false}.
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_you_tube_tracker_1_1_youtube_tracker_a24b98848290566830b3f08b09168f4d9}\label{class_you_tube_tracker_1_1_youtube_tracker_a24b98848290566830b3f08b09168f4d9}} 
+\index{You\+Tube\+Tracker\+::\+Youtube\+Tracker@{You\+Tube\+Tracker\+::\+Youtube\+Tracker}!Search@{Search}}
+\index{Search@{Search}!You\+Tube\+Tracker\+::\+Youtube\+Tracker@{You\+Tube\+Tracker\+::\+Youtube\+Tracker}}
+\subsubsection{\texorpdfstring{Search()}{Search()}}
+{\footnotesize\ttfamily static bool You\+Tube\+Tracker.\+Youtube\+Tracker.\+Search (\begin{DoxyParamCaption}\item[{string}]{keyword,  }\item[{uint}]{max\+\_\+results = {\ttfamily 10} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Static method for executing youtube search request. Result can be accesed by {\ttfamily Get\+Loaded\+Videos\+From\+Search} method. Calls internal classes {\ttfamily Youtube\+Search}, {\ttfamily Youtube\+Video}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em keyword} & Phrase to be search on youtube\\
+\hline
+{\em max\+\_\+results} & Maximum amount of results\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if suceed otherwise {\ttfamily false}
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_you_tube_tracker_1_1_youtube_tracker_a431b19f99b43d033603fb67b66dde65a}\label{class_you_tube_tracker_1_1_youtube_tracker_a431b19f99b43d033603fb67b66dde65a}} 
+\index{You\+Tube\+Tracker\+::\+Youtube\+Tracker@{You\+Tube\+Tracker\+::\+Youtube\+Tracker}!Y\+T\+Duration2seconds@{Y\+T\+Duration2seconds}}
+\index{Y\+T\+Duration2seconds@{Y\+T\+Duration2seconds}!You\+Tube\+Tracker\+::\+Youtube\+Tracker@{You\+Tube\+Tracker\+::\+Youtube\+Tracker}}
+\subsubsection{\texorpdfstring{Y\+T\+Duration2seconds()}{YTDuration2seconds()}}
+{\footnotesize\ttfamily static int You\+Tube\+Tracker.\+Youtube\+Tracker.\+Y\+T\+Duration2seconds (\begin{DoxyParamCaption}\item[{string}]{yt\+\_\+duration }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Static method for converting video duration in I\+SO 8601 format to seconds(int) format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em yt\+\_\+duration} & Duration in I\+SO 8601 format\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Duration in seconds.
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Youtube\+Search.\+cs\item 
+Youtube\+Tracker.\+cs\end{DoxyCompactItemize}
