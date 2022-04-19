@@ -92,7 +92,7 @@ namespace YouTubeTracker
                 searchListRequest.Q = keyword;
                 searchListRequest.MaxResults = max_results;
                 // Call the search.list method to retrieve results matching the specified query term.
-                SearchListResponse searchListResponse = null;
+                SearchListResponse searchListResponse;
                 try
                 {
                     searchListResponse = searchListRequest.Execute();

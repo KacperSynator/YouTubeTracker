@@ -50,6 +50,31 @@ namespace YouTubeTracker
         }
 
         /// <summary>
+        /// Update TextBlock: <c>playlistInfo</c> with given playlist info.
+        /// </summary>
+        /// <param name="playlist_id">Playlist id</param>
+        public void UpdatePlaylistInfoTextBlock(int playlist_id)
+        {
+            var context = App.Context;
+            if (context.DBVideos.Where(x => x.DBPlaylistID == playlist_id).Any())
+            {
+                var duration = context.DBVideos
+                    .Where(x => x.DBPlaylistID == playlist_id)
+                    .Sum(x => x.Duration);
+                var count = context.DBVideos.
+                    Where(x => x.DBPlaylistID == playlist_id)
+                    .Count();
+                playlistInfo.Text = "Videos count: " + count.ToString() +
+                "         Playlist duration: " + (duration / 60).ToString() + " min.";
+            }
+            else // empty playlist
+            {
+                playlistInfo.Text = "Videos count: " + 0.ToString() +
+                "         Playlist duration: " + 0.ToString() + " min.";
+            }
+        }
+
+        /// <summary>
         /// Click logic for button: <c>searchButton</c>. 
         /// Executes youtube search using search phrase (at least 5 characters)
         /// and max results (default 10) specified in app window,
@@ -63,8 +88,7 @@ namespace YouTubeTracker
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             // check if max search reults is given otherwise set to 10
-            uint max_results;
-            if (!UInt32.TryParse(maxSearchResults.Text, out max_results))
+            if (!UInt32.TryParse(maxSearchResults.Text, out uint max_results))
             {
                 max_results = 10;
             }
@@ -190,6 +214,8 @@ namespace YouTubeTracker
                     );
                 UpdateVideoListBox(YoutubeTracker.GetLoadedVideosFromDB());
             }
+            // print playlist duration and videos count
+            UpdatePlaylistInfoTextBlock(playlist.ID);
         }
 
         /// <summary>
@@ -235,10 +261,16 @@ namespace YouTubeTracker
             // update ListBox
             YoutubeTracker.GetLoadedVideosFromDB().RemoveAt(idx);
             UpdateVideoListBox(YoutubeTracker.GetLoadedVideosFromDB());
+            // print playlist duration and videos count
+            var playlist_id = context.DBPlaylists
+                .Where(x => x.Name == selected_playlist)
+                .First()
+                .ID;
+            UpdatePlaylistInfoTextBlock(playlist_id);
         }
 
         /// <summary>
-        /// Click logic for button: <c>addPlaylisButton</c>. 
+        /// Click logic for button: <c>createPlaylisButton</c>. 
         /// Adds new playlist, name is read from TextBox: <c>phraseText</c>, updated database.
         /// Fails and shows adequate message box if:
         /// 1. Playlist name was not given.
@@ -246,7 +278,7 @@ namespace YouTubeTracker
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AddPlaylistButton_Click(object sender, RoutedEventArgs e)
+        private void CreatePlaylistButton_Click(object sender, RoutedEventArgs e)
         {
             // validate given playlist name
             var playlist_name = videoPhrase.Text;
@@ -272,13 +304,13 @@ namespace YouTubeTracker
         }
 
         /// <summary>
-        /// Click logic for button: <c>removePlaylisButton</c>. 
+        /// Click logic for button: <c>deletePlaylisButton</c>. 
         /// Removes selected playlist, updates database.
         /// Fails and shows message box if playlist is not selected.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RemovePlaylistButton_Click(object sender, RoutedEventArgs e)
+        private void DeletePlaylistButton_Click(object sender, RoutedEventArgs e)
         {
             // check if playlist is selected
             var selected_playlist = playlistsCB.SelectedItem as string;
@@ -304,7 +336,7 @@ namespace YouTubeTracker
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private new void PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // check if input is numeric
             Regex regex = new Regex("[^0-9]+");
@@ -383,6 +415,7 @@ namespace YouTubeTracker
             // load selected playlist videos
             var context = App.Context;
             var playlist_name = playlistsCB.SelectedItem as string;
+            if (String.IsNullOrEmpty(playlist_name)) return;
             var playlist_id = context.DBPlaylists
                 .Where(x => x.Name == playlist_name)
                 .First()
@@ -399,14 +432,7 @@ namespace YouTubeTracker
                 UpdateVideoListBox(YoutubeTracker.GetLoadedVideosFromDB());
             }
             // print playlist duration and videos count
-            var duration = context.DBVideos
-                .Where(x => x.DBPlaylistID == playlist_id)
-                .Sum(x => x.Duration);
-            var count = context.DBVideos.
-                Where(x => x.DBPlaylistID == playlist_id)
-                .Count();
-            playlistDuration.Text = "Videos count: " + count.ToString() +
-            "         Playlist duration: " + (duration / 60).ToString() + " min.";              
+            UpdatePlaylistInfoTextBlock(playlist_id);
         }
     }
 }

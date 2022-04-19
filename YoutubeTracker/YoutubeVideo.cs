@@ -78,7 +78,7 @@ namespace YouTubeTracker
                 var videoListRequest = youtubeService.Videos.List("player,contentDetails,statistics,snippet,id");
                 videoListRequest.Id = String.Join(",", videos_id);
                 // Call the video.list method to retrieve results matching the specified query term.
-                VideoListResponse videoListResponse = null;
+                VideoListResponse videoListResponse;
                 try
                 {
                     videoListResponse = videoListRequest.Execute();

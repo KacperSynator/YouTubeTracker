@@ -54,7 +54,7 @@ namespace YouTubeTracker
         /// <returns>API key when suceed otherwise <c>null</c>.</returns>
         public static string GetApiKey()
         {
-            string ApiKey = null;
+            string ApiKey;
             try
             {
                 ApiKey = System.IO.File.ReadAllText(@"..\..\API_key.txt");

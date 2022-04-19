@@ -57,14 +57,14 @@
                      GroupName="ViewSelection" Foreground="WhiteSmoke">Playlist</RadioButton>
         </StackPanel>
 
-        <TextBlock x:Name="playlistDuration" Grid.Column="4" Grid.Row="3" Margin="5" Text="Playlist duration: " 
+        <TextBlock x:Name="playlistInfo" Grid.Column="4" Grid.Row="3" Margin="5" Text="Playlist info: " 
                    Grid.ColumnSpan="3"/>
 
         <ComboBox x:Name="playlistsCB" Grid.Column="4"  Grid.Row="4" Margin="5" SelectionChanged="PlaylistComboBox_Changed" />
-        <Button x:Name="addPlaylistButton" Content=" Add playlist " Grid.Column="5" Grid.Row="4"
-                Margin="5" Click="AddPlaylistButton_Click"/>
-        <Button x:Name="removePlaylistButton" Content=" Remove playlist " Grid.Column="6" Grid.Row="4"
-                Margin="5" Click="RemovePlaylistButton_Click"/>
+        <Button x:Name="addPlaylistButton" Content=" Create playlist " Grid.Column="5" Grid.Row="4"
+                Margin="5" Click="CreatePlaylistButton_Click"/>
+        <Button x:Name="removePlaylistButton" Content=" Delete playlist " Grid.Column="6" Grid.Row="4"
+                Margin="5" Click="DeletePlaylistButton_Click"/>
         
         <Button x:Name="playButton" Content=" Play " Grid.Column="4" Grid.Row="5"
                 Margin="5" Click="PlayButton_Click"/>
