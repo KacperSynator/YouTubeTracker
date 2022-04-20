@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
+using Microsoft.Web.WebView2.Core;
 
 
 namespace YouTubeTracker
@@ -140,7 +141,7 @@ namespace YouTubeTracker
                 embed_html.Insert(embed_html.IndexOf("//www"), "https:") +
                 "<body style=\"background-color:black;\"></body>" +
                 "</head></html>";
-            videoWeb.NavigateToString(string.Format(html, id));
+            videoWeb.CoreWebView2.NavigateToString(string.Format(html, id));
         }
 
         /// <summary>
