@@ -133,12 +133,15 @@ namespace YouTubeTracker
             {
                 loaded_videos = YoutubeTracker.GetLoadedVideosFromDB();
             }
-            // play youtube video in WebBrowser
-            var embed_html = loaded_videos[idx].embed_html;
+            // play youtube video in WebView2
             var id = loaded_videos[idx].id;
             string html = "<html><head>" +
                 "<meta content='chrome=1,IE=Edge' http-equiv='X-UA-Compatible'/>" +
-                embed_html.Insert(embed_html.IndexOf("//www"), "https:") +
+                 "<iframe id='video' src= 'https://www.youtube.com/embed/{0}'" +
+                "  style=\"overflow: hidden; overflow - x:hidden; overflow - y:hidden;" +
+                " height: 100 %; width: 100 %; position: absolute; top: 0px; left: 0px;" +
+                " right: 0px; bottom: 0px\" width='100%' height='100%' frameborder='0' " +
+                "allow = \"autoplay; encrypted-media\" allowFullScreen></iframe>" +
                 "<body style=\"background-color:black;\"></body>" +
                 "</head></html>";
             videoWeb.CoreWebView2.NavigateToString(string.Format(html, id));
