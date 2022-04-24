@@ -10,9 +10,10 @@
             CreateTable(
                 "dbo.DBPlaylists",
                 c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                    })
+                {
+                    ID = c.Int(nullable: false, identity: true),
+                    Name = c.String(nullable: false),
+                })
                 .PrimaryKey(t => t.ID);
             
             CreateTable(

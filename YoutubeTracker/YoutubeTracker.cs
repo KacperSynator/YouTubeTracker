@@ -87,6 +87,7 @@ namespace YouTubeTracker
             if (videos_with_all_data == null) return false;
 
             if (LoadedVideosFromSearch == null) LoadedVideosFromSearch = new List<VideoData>();
+            LoadedVideosFromSearch.Clear();
             LoadedVideosFromSearch.AddRange(videos_with_all_data);
             return true;
         }
