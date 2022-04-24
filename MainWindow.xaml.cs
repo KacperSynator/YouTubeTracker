@@ -21,8 +21,26 @@ namespace YouTubeTracker
         public MainWindow()
         {
             InitializeComponent();
+            InitializeWebView2Async();
             UpdatePlaylistComboBox();
         }
+        /// <summary>
+        /// Initializes video player
+        /// </summary>
+        private async void InitializeWebView2Async()
+        {
+            try
+            {
+                await videoWeb.EnsureCoreWebView2Async(null);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error: video player not initialised. Try to lunch in Release with 'just my code' disabled." +
+                    "Exception Message:" + ex.Message);
+            }
+            
+        }
+
 
         /// <summary>
         /// Populates ComboBox: <c>playListCB</c> with database playlists' names.

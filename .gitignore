@@ -369,3 +369,5 @@ FodyWeavers.xsd
 /index.md
 /api
 /_site
+/articles
+/toc.yml
