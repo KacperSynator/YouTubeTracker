@@ -112,7 +112,7 @@
     <Compile Include="DataBase\YTrackerDBContext.cs" />
     <Compile Include="ListBoxItem.cs" />
     <Compile Include="Migrations\202204161600275_InitialCreate.cs" />
-    <Compile Include="Migrations\202204161600275_InitialCreate.designer.cs">
+    <Compile Include="Migrations\202204161600275_InitialCreate.Designer.cs">
       <DependentUpon>202204161600275_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
@@ -162,11 +162,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="API_key.txt">
-      <SubType>Component</SubType>
-    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Documentation\" />

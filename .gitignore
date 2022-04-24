@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 # Hide file with api key
 *API_key.txt
+/log.txt
+/docfx.json
+/index.md
